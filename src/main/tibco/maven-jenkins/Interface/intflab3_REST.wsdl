@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.example.com/1619514932897" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx0="http://www.tibco.com/schemas/Lab3/Schemas/Schema.xsd" xmlns:pfx1="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd" targetNamespace="http://www.example.com/1619514932897">
+    <import namespace="http://www.tibco.com/schemas/Lab3/Schemas/Schema.xsd" location="../Schemas/Start.xsd"/>
+    <import namespace="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd" location="../JSON_GEN_Schemas/WeatherSchema.xsd"/>
+    <message name="JSON">
+        <part element="pfx1:JSON" name="parameters"/>
+    </message>
+    <message name="root">
+        <part element="pfx0:root" name="parameters"/>
+    </message>
+    <portType name="portType">
+        <operation name="lab3_sp_RESTOp">
+            <input message="tns:root"/>
+            <output message="tns:JSON"/>
+        </operation>
+    </portType>
+</definitions>

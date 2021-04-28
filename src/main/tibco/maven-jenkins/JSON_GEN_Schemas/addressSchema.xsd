@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="current" type="JSONType"/>
+	<xs:complexType name="propertiesType">
+		<xs:all>
+			<xs:element name="label" type="xs:string" minOccurs="0"/>
+			<xs:element name="score" type="xs:float" minOccurs="0"/>
+			<xs:element name="housenumber" type="xs:byte" minOccurs="0"/>
+			<xs:element name="id" type="xs:string" minOccurs="0"/>
+			<xs:element name="name" type="xs:string" minOccurs="0"/>
+			<xs:element name="postcode" type="xs:int" minOccurs="0"/>
+			<xs:element name="citycode" type="xs:int" minOccurs="0"/>
+			<xs:element name="x" type="xs:float" minOccurs="0"/>
+			<xs:element name="y" type="xs:float" minOccurs="0"/>
+			<xs:element name="city" type="xs:string" minOccurs="0"/>
+			<xs:element name="context" type="xs:string" minOccurs="0"/>
+			<xs:element name="type" type="xs:string" minOccurs="0"/>
+			<xs:element name="importance" type="xs:float" minOccurs="0"/>
+			<xs:element name="street" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="featuresType">
+		<xs:all>
+			<xs:element name="type" type="xs:string" minOccurs="0"/>
+			<xs:element name="geometry" type="geometryType"/>
+			<xs:element name="properties" type="propertiesType" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="JSONType">
+		<xs:sequence>
+			<xs:element name="type" type="xs:string" minOccurs="0"/>
+			<xs:element name="version" type="xs:string" minOccurs="0"/>
+			<xs:element name="features" type="featuresType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="attribution" type="xs:string" minOccurs="0"/>
+			<xs:element name="licence" type="xs:string" minOccurs="0"/>
+			<xs:element name="query" type="xs:string" minOccurs="0"/>
+			<xs:element name="limit" type="xs:byte" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="geometryType">
+		<xs:sequence>
+			<xs:element name="type" type="xs:string" minOccurs="0"/>
+			<xs:element name="coordinates" type="xs:float" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -2,7 +2,7 @@
 <repository version="2" commitCount="1">
   <instanceInfo>
     <instanceInfoProperty name="displayName" value="NewOneToITL"/>
-    <instanceInfoProperty name="version" value="5.7.2"/>
+    <instanceInfoProperty name="version" value="5.11.1"/>
     <instanceInfoProperty name="rootDir" value="."/>
     <instanceInfoProperty name="instanceType" value="localFile"/>
     <instanceInfoProperty name="fileType" value="VC"/>

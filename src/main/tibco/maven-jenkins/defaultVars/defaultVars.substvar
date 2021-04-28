@@ -1,31 +1,141 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
-<!--
-
-    (C) Copyright 2011-2015 FastConnect SAS
-    (http://www.fastconnect.fr/) and others.
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
--->
 <repository xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://www.tibco.com/xmlns/repo/types/2002">
 	<globalVariables>
+		<globalVariable>
+			<name>Deployment</name>
+			<value>lab</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961072</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>DirLedger</name>
+			<value>.</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961124</modTime>
+		</globalVariable>
 		<globalVariable>
 			<name>DirTrace</name>
 			<value>.</value>
 			<deploymentSettable>true</deploymentSettable>
 			<serviceSettable>false</serviceSettable>
 			<type>String</type>
-			<modTime>1366798296904</modTime>
+			<modTime>1618320961000</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>Domain</name>
+			<value>domain</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961198</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>HawkEnabled</name>
+			<value>false</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961135</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>JmsProviderUrl</name>
+			<value>tcp://localhost:7222</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961019</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>JmsSslProviderUrl</name>
+			<value>ssl://localhost:7243</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961166</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>RemoteRvDaemon</name>
+			<value></value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961145</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>RvDaemon</name>
+			<value>tcp:7500</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961059</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>RvNetwork</name>
+			<value></value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961188</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>RvService</name>
+			<value>7500</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961032</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>RvaHost</name>
+			<value>localhost</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961156</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>RvaPort</name>
+			<value>7600</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961089</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>TIBHawkDaemon</name>
+			<value>tcp:7474</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961178</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>TIBHawkNetwork</name>
+			<value></value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961108</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>TIBHawkService</name>
+			<value>7474</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1618320961041</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>localWeather</name>
+			<value>C:\Users\Dev\Documents\repos\Lab3\local\</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1619424805282</modTime>
 		</globalVariable>
 	</globalVariables>
 </repository>

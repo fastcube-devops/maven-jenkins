@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx6="http://xmlns.example.com/1619095826287" xmlns:pfx7="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd" xmlns:pfx8="http://xmlns.example.com/1619096687742" xmlns:pfx="http://xmlns.lab3.com/1618918807546" xmlns:pfx9="http://xmlns.example.com/1619189668634" xmlns:pfx2="http://www.example.com/1618918793744" xmlns:pfx3="http://www.tibco.com/schemas/Lab3/Schemas/Schema.xsd" xmlns:pfx4="http://xmlns.example.com/1619018351572" xmlns:pfx5="http://xmlns.example.com/1619086553657" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx11="http://xmlns.example.com/1619191036770" xmlns:pfx12="http://xmlns.example.com/1619191883442" xmlns:pfx10="http://xmlns.example.com/1619190464397" xmlns:pfx13="http://xmlns.example.com/1619514940796">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/Lab3/Schemas/Schema.xsd" schemaLocation="/Schemas/Start.xsd"/>
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd" schemaLocation="/JSON_GEN_Schemas/WeatherSchema.xsd"/>
+    <wsdl:import namespace="http://xmlns.lab3.com/1618918807546"/>
+    <wsdl:import namespace="http://www.example.com/1618918793744"/>
+    <wsdl:import namespace="http://xmlns.example.com/1619189668634"/>
+    <wsdl:import namespace="http://xmlns.example.com/1619190464397"/>
+    <wsdl:import namespace="http://xmlns.example.com/1619191036770"/>
+    <wsdl:import namespace="http://xmlns.example.com/1619514940796" location="/contract/contrat.wsdl"/>
+    <pd:name>ProcessDefinitions/Lab3 SOAP.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx3:root"/>
+    <pd:startX>137</pd:startX>
+    <pd:startY>211</pd:startY>
+    <pd:returnBindings>
+        <xsl:for-each select="$SOAPRequestReply/outputMessage/pfx7:JSON">
+            <pfx7:JSON>
+                <xsl:for-each select="pfx7:coord">
+                    <pfx7:coord>
+                        <xsl:if test="pfx7:lon">
+                            <pfx7:lon>
+                                <xsl:value-of select="pfx7:lon"/>
+                            </pfx7:lon>
+                        </xsl:if>
+                        <xsl:if test="pfx7:lat">
+                            <pfx7:lat>
+                                <xsl:value-of select="pfx7:lat"/>
+                            </pfx7:lat>
+                        </xsl:if>
+                    </pfx7:coord>
+                </xsl:for-each>
+                <xsl:for-each select="pfx7:weather">
+                    <pfx7:weather>
+                        <xsl:if test="pfx7:id">
+                            <pfx7:id>
+                                <xsl:value-of select="pfx7:id"/>
+                            </pfx7:id>
+                        </xsl:if>
+                        <xsl:if test="pfx7:main">
+                            <pfx7:main>
+                                <xsl:value-of select="pfx7:main"/>
+                            </pfx7:main>
+                        </xsl:if>
+                        <xsl:if test="pfx7:description">
+                            <pfx7:description>
+                                <xsl:value-of select="pfx7:description"/>
+                            </pfx7:description>
+                        </xsl:if>
+                        <xsl:if test="pfx7:icon">
+                            <pfx7:icon>
+                                <xsl:value-of select="pfx7:icon"/>
+                            </pfx7:icon>
+                        </xsl:if>
+                    </pfx7:weather>
+                </xsl:for-each>
+                <xsl:if test="pfx7:base">
+                    <pfx7:base>
+                        <xsl:value-of select="pfx7:base"/>
+                    </pfx7:base>
+                </xsl:if>
+                <xsl:for-each select="pfx7:main">
+                    <pfx7:main>
+                        <xsl:if test="pfx7:temp">
+                            <pfx7:temp>
+                                <xsl:value-of select="pfx7:temp"/>
+                            </pfx7:temp>
+                        </xsl:if>
+                        <xsl:if test="pfx7:feels_like">
+                            <pfx7:feels_like>
+                                <xsl:value-of select="pfx7:feels_like"/>
+                            </pfx7:feels_like>
+                        </xsl:if>
+                        <xsl:if test="pfx7:temp_min">
+                            <pfx7:temp_min>
+                                <xsl:value-of select="pfx7:temp_min"/>
+                            </pfx7:temp_min>
+                        </xsl:if>
+                        <xsl:if test="pfx7:temp_max">
+                            <pfx7:temp_max>
+                                <xsl:value-of select="pfx7:temp_max"/>
+                            </pfx7:temp_max>
+                        </xsl:if>
+                        <xsl:if test="pfx7:pressure">
+                            <pfx7:pressure>
+                                <xsl:value-of select="pfx7:pressure"/>
+                            </pfx7:pressure>
+                        </xsl:if>
+                        <xsl:if test="pfx7:humidity">
+                            <pfx7:humidity>
+                                <xsl:value-of select="pfx7:humidity"/>
+                            </pfx7:humidity>
+                        </xsl:if>
+                    </pfx7:main>
+                </xsl:for-each>
+                <xsl:if test="pfx7:visibility">
+                    <pfx7:visibility>
+                        <xsl:value-of select="pfx7:visibility"/>
+                    </pfx7:visibility>
+                </xsl:if>
+                <xsl:for-each select="pfx7:wind">
+                    <pfx7:wind>
+                        <xsl:if test="pfx7:speed">
+                            <pfx7:speed>
+                                <xsl:value-of select="pfx7:speed"/>
+                            </pfx7:speed>
+                        </xsl:if>
+                        <xsl:if test="pfx7:deg">
+                            <pfx7:deg>
+                                <xsl:value-of select="pfx7:deg"/>
+                            </pfx7:deg>
+                        </xsl:if>
+                    </pfx7:wind>
+                </xsl:for-each>
+                <xsl:for-each select="pfx7:clouds">
+                    <pfx7:clouds>
+                        <xsl:if test="pfx7:all">
+                            <pfx7:all>
+                                <xsl:value-of select="pfx7:all"/>
+                            </pfx7:all>
+                        </xsl:if>
+                    </pfx7:clouds>
+                </xsl:for-each>
+                <xsl:if test="pfx7:dt">
+                    <pfx7:dt>
+                        <xsl:value-of select="pfx7:dt"/>
+                    </pfx7:dt>
+                </xsl:if>
+                <xsl:for-each select="pfx7:sys">
+                    <pfx7:sys>
+                        <xsl:if test="pfx7:type">
+                            <pfx7:type>
+                                <xsl:value-of select="pfx7:type"/>
+                            </pfx7:type>
+                        </xsl:if>
+                        <xsl:if test="pfx7:id">
+                            <pfx7:id>
+                                <xsl:value-of select="pfx7:id"/>
+                            </pfx7:id>
+                        </xsl:if>
+                        <xsl:if test="pfx7:country">
+                            <pfx7:country>
+                                <xsl:value-of select="pfx7:country"/>
+                            </pfx7:country>
+                        </xsl:if>
+                        <xsl:if test="pfx7:sunrise">
+                            <pfx7:sunrise>
+                                <xsl:value-of select="pfx7:sunrise"/>
+                            </pfx7:sunrise>
+                        </xsl:if>
+                        <xsl:if test="pfx7:sunset">
+                            <pfx7:sunset>
+                                <xsl:value-of select="pfx7:sunset"/>
+                            </pfx7:sunset>
+                        </xsl:if>
+                    </pfx7:sys>
+                </xsl:for-each>
+                <xsl:if test="pfx7:timezone">
+                    <pfx7:timezone>
+                        <xsl:value-of select="pfx7:timezone"/>
+                    </pfx7:timezone>
+                </xsl:if>
+                <xsl:if test="pfx7:id">
+                    <pfx7:id>
+                        <xsl:value-of select="pfx7:id"/>
+                    </pfx7:id>
+                </xsl:if>
+                <xsl:if test="pfx7:name">
+                    <pfx7:name>
+                        <xsl:value-of select="pfx7:name"/>
+                    </pfx7:name>
+                </xsl:if>
+                <xsl:if test="pfx7:cod">
+                    <pfx7:cod>
+                        <xsl:value-of select="pfx7:cod"/>
+                    </pfx7:cod>
+                </xsl:if>
+            </pfx7:JSON>
+        </xsl:for-each>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx7:JSON"/>
+    <pd:endX>550</pd:endX>
+    <pd:endY>215</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1618919131098</pd:targetNamespace>
+    <pd:activity name="SOAPRequestReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>332</pd:x>
+        <pd:y>212</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx13:intflab3_REST-service</service>
+            <servicePort>intfwslab3_RESTEndpoint0</servicePort>
+            <operation>lab3_sp_RESTOp</operation>
+            <soapAction>/Interface/intflab3_REST-service.serviceagent/intfwslab3_RESTEndpoint0/lab3_sp_RESTOp</soapAction>
+            <endpointURL>http://localhost:7575/Interface/intflab3_REST-service.serviceagent/intfwslab3_RESTEndpoint0</endpointURL>
+            <authScheme>NONE</authScheme>
+            <useProxy>false</useProxy>
+            <requireBasicAuth>false</requireBasicAuth>
+            <basicHttpAuthIdentity/>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <xsl:copy-of select="$Start/pfx3:root"/>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SOAPRequestReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:wsdlPfx="http://www.example.com/1619514932897" xmlns:pfx0="http://www.tibco.com/schemas/Lab3/Schemas/Schema.xsd" xmlns:pfx1="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd">
+    <wsdl:import namespace="http://www.example.com/1619514932897" location="/Interface/intflab3_REST.wsdl"/>
+    <pd:name>Interface/wslab3_REST.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="wsdlPfx:root"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>50</pd:startY>
+    <pd:returnBindings>
+        <wsdlPfx:JSON>
+            <parameters>
+                <xsl:copy-of select="$Call-Process/pfx1:JSON"/>
+            </parameters>
+        </wsdlPfx:JSON>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="wsdlPfx:JSON"/>
+    <pd:endX>450</pd:endX>
+    <pd:endY>50</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1619514940781</pd:targetNamespace>
+    <pd:activity name="Call Process">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>272</pd:x>
+        <pd:y>51</pd:y>
+        <config>
+            <processName>/ProcessDefinitions/lab3 REST.process</processName>
+        </config>
+        <pd:inputBindings>
+            <xsl:copy-of select="$Start/wsdlPfx:root/parameters/pfx0:root"/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Call Process</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Process</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
