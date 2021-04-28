@@ -10,3 +10,12 @@
 # package
 
   mvn package
+
+# add/remove dependency
+
+First we have to add the proj lib to the project 
+
+mvn install:install-file -Dfile=C:\Users\Dev\Documents\repos\maven-jenkins\lib\LogLib.projlib -DgroupId=logging -DartifactId=logLib -Dversion=1.0.2 -Dtype=projlib -Dpackaging=projlib
+
+Second we add the dependecy
+mvn bw:<<add/remove>>-dependency -DdependencyGroupId=logging -DdependencyArtifactId=LogLib -DdependencyVersion=1.0.2 -DdependencyType=projlib -DdoIt=true
