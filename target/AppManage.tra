@@ -1,0 +1,68 @@
+tibco.env.EMS_HOME c:/tibco/ems/8.6
+#
+# Copyright (c) 2007 TIBCO Software Inc.
+# All Rights Reserved.
+#
+# This software is the confidential and proprietary information of
+# TIBCO Software Inc.
+#
+#
+#========================================================== 
+# *** Common variables. Modify these only. ***
+#========================================================== 
+#
+tibco.env.PSP=;
+tibco.env.JVM_LIB_PATH=C:/tibco/tibcojre64/1.8.0/bin/server/jvm.dll
+tibco.env.JVM_LIB_DIR=C:/tibco/tibcojre64/1.8.0/bin/server
+tibco.env.JVM_LIB_SERVER_DIR=C:/tibco/tibcojre64/1.8.0/bin/server
+tibco.env.RV_HOME=C:/tibco/tibrv/8.4
+tibco.env.HAWK_HOME=C:/tibco/hawk/5.2
+tibco.env.TPCL_HOME=C:/tibco/tpcl/5.11
+tibco.env.TRA_HOME=C:/tibco/tra/5.11
+tibco.env.TIB_JAVA_HOME=C:/tibco/tibcojre64/1.8.0
+tibco.env.TRA_APPEND_VERSION=5.11
+
+#
+# Specifies the initial Java heap size to allocate
+java.heap.size.max 512M
+# 
+#========================================================== 
+# *** Do NOT modify beyond this line ***
+#========================================================== 
+#
+tibco.env.PATH .;%TRA_HOME%/hotfix/bin;%TRA_HOME%/bin;%TPCL_HOME%/bin;%RV_HOME%/bin;%TIB_JAVA_HOME%/bin;%PATH%;%EMS_HOME%/bin;;%EMS_HOME%/lib;
+
+tibco.env.LD_LIBRARY_PATH %TRA_HOME%/hotfix/lib;%TRA_HOME%/lib;%TPCL_HOME%/lib;%RV_HOME%/lib;%JVM_LIB_SERVER_DIR%;%JVM_LIB_DIR%;%EMS_HOME%/bin;;%EMS_HOME%/lib;
+
+tibco.env.SHLIB_PATH %TRA_HOME%/hotfix/lib;%TRA_HOME%/lib;%TPCL_HOME%/lib;%RV_HOME%/lib;%JVM_LIB_SERVER_DIR%;%JVM_LIB_DIR%;%EMS_HOME%/bin;;%EMS_HOME%/lib;
+
+tibco.env.LIBPATH %TRA_HOME%/hotfix/lib;%TRA_HOME%/lib;%TPCL_HOME%/lib;%RV_HOME%/lib;%JVM_LIB_SERVER_DIR%;%JVM_LIB_DIR%;%EMS_HOME%/bin;;%EMS_HOME%/lib;
+
+tibco.env.DYLD_LIBRARY_PATH %TRA_HOME%/hotfix/lib;%TRA_HOME%/lib;%TPCL_HOME%/lib;%RV_HOME%/lib;%DYLD_LIBRARY_PATH%
+
+#
+# Specifies the JVM to be used to launch this application
+java.library %JVM_LIB_PATH%
+
+#
+# Specifies the class to launch
+java.start.class com.tibco.administrator.command.tool.ApplicationManagement
+#
+# Specifies the main function in invoke
+java.start.method main
+
+
+#
+# Specifies the -Djava.ext.dirs flag
+tibco.class.path.extended %TRA_HOME%/hotfix/lib;%TRA_HOME%/lib;%TPCL_HOME%/tomcat/7/lib;%TPCL_HOME%/tomcat/7/bin;%TPCL_HOME%/lib;%RV_HOME%/lib/tibrvj.jar;%RV_HOME%/bin;%HAWK_HOME%/bin;%HAWK_HOME%/lib;%TPCL_HOME%/jdbc;%TPCL_HOME%/lib/entrust;%EMS_HOME%/lib;
+
+
+#
+# Specifies the remaining arguments to pass into the application
+#application.args 
+
+
+# eof
+java.property.TIBCO_TRA_HOME %TRA_HOME%
+java.property.TIBCO_TRA_VERSION %TRA_APPEND_VERSION%
+

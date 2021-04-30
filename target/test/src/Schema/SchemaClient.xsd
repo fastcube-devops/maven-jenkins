@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/maven-jenkins/Schema/Schema.xsd2"
+	 targetNamespace="http://www.tibco.com/schemas/maven-jenkins/Schema/Schema.xsd2"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="infoClient">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id_client"/>
+				<xs:element ref="nom"/>
+				<xs:element ref="prenom"/>
+				<xs:element ref="adresse"/>
+				<xs:element ref="profession"/>
+				<xs:element ref="date_ajout"/>
+				<xs:element ref="date_update"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="nom" type="xs:string"/>
+	<xs:element name="prenom" type="xs:string"/>
+	<xs:element name="id_client" type="xs:string"/>
+	<xs:element name="date_ajout" type="xs:string"/>
+	<xs:element name="date_update" type="xs:string"/>
+	<xs:element name="adresse" type="xs:string"/>
+	<xs:element name="profession" type="xs:string"/>
+</xs:schema>

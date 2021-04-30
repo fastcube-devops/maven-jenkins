@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx="http://www.tibco.com/schemas/lab1/Schema/Schema.xsd" xmlns:pfx2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://schemas.tibco.com/bw/plugins/file/5.0/fileExceptions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://www.tibco.com/schemas/Logging/Schemas/Schema.xsd" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="http://www.tibco.com/schemas/maven-jenkins/Schema/Schema.xsd" xmlns:ns5="http://schemas.tibco.com/bw/plugins/jdbc/5.0/jdbcExceptions" xmlns:ns7="http://www.tibco.com/schemas/maven-jenkins/Schema/Schema.xsd2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <xsd:import namespace="http://www.tibco.com/schemas/lab1/Schema/Schema.xsd" schemaLocation="/Schema/SchemaClient.xsd"/>
+    <pd:name>ProcessDefinitions/Verify_name_file.process</pd:name>
+    <pd:startName>File Poller</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="File Poller">
+        <pd:type>com.tibco.plugin.file.FileEventSource</pd:type>
+        <pd:resourceType>ae.activities.FileEventSourceResource</pd:resourceType>
+        <pd:x>51</pd:x>
+        <pd:y>78</pd:y>
+        <config>
+            <pollInterval>2</pollInterval>
+            <createEvent>true</createEvent>
+            <modifyEvent>false</modifyEvent>
+            <deleteEvent>false</deleteEvent>
+            <mode>only-files</mode>
+            <encoding>text</encoding>
+            <sortby>File Name</sortby>
+            <sortorder>descending</sortorder>
+            <fileName>%%lab/RepertoireFichierCsv%%</fileName>
+            <encodingUsed>UTF8</encodingUsed>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>969</pd:endX>
+    <pd:endY>256</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1618816056950</pd:targetNamespace>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>227</pd:x>
+        <pd:y>84</pd:y>
+        <config>
+            <element>
+                <xsd:element name="FileName" type="xsd:string"/>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <FileName>
+                <xsl:value-of select="if (contains(tib:substring-after-last($File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName, &quot;.&quot;), &quot;csv&quot; )and &#xA;tib:validate-dateTime( 'ddMMyyyy', tib:substring-after-last( tib:substring-before-last($File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName,&quot;_&quot;), &quot;_&quot;)) and&#xA; number(tib:substring-after-last( tib:substring-before-last($File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName,&quot;_&quot;), &quot;_&quot;))and  &#xA; number( substring-before( tib:substring-after-last($File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName ,&quot;_&quot;), &quot;.&quot;)))&#xA; then &quot;Accepte&quot; else &quot;Reject&quot;"/>
+            </FileName>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Copy File">
+        <pd:type>com.tibco.plugin.file.FileCopyActivity</pd:type>
+        <pd:resourceType>ae.activities.FileCopyActivity</pd:resourceType>
+        <pd:x>376</pd:x>
+        <pd:y>81</pd:y>
+        <config>
+            <overwrite>true</overwrite>
+        </config>
+        <pd:inputBindings>
+            <xsl:choose>
+                <xsl:when test="$Map-Data/FileName='Accepte'">
+                    <ns:CopyActivityConfig>
+                        <fromFileName>
+                            <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/lab/RepertoireFrom,$File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName)"/>
+                        </fromFileName>
+                        <toFileName>
+                            <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/lab/RepertoireFileVerified,substring-before($File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName,'.'),'_moved.csv')"/>
+                        </toFileName>
+                    </ns:CopyActivityConfig>
+                </xsl:when>
+                <xsl:otherwise>
+                    <ns:CopyActivityConfig>
+                        <fromFileName>
+                            <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/lab/RepertoireFrom,$File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName)"/>
+                        </fromFileName>
+                        <toFileName>
+                            <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/lab/RepertoireError,$File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName)"/>
+                        </toFileName>
+                    </ns:CopyActivityConfig>
+                </xsl:otherwise>
+            </xsl:choose>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Data">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>581</pd:x>
+        <pd:y>81</pd:y>
+        <config>
+            <InputType>String</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/Schema/Data Format.sharedparse</ParseSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <text>
+                    <xsl:value-of select="$File-Poller/ns:EventSourceOuputTextClass/fileContent/textContent"/>
+                </text>
+                <noOfRecords>
+                    <xsl:value-of select="1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="JDBC Update">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>729</pd:x>
+        <pd:y>79</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/Connections/JDBC_Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>update clients 
+set date_update = Current_date 
+where id_client=?</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>id_client</parameterName>
+                    <dataType>INTEGER</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput>
+                <id_client>
+                    <xsl:choose>
+                        <xsl:when test="exists($Parse-Data/Output/Rows/ns7:infoClient[1]/ns7:id_client)">
+                            <xsl:value-of select="$Parse-Data/Output/Rows/ns7:infoClient[1]/ns7:id_client"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </id_client>
+            </jdbcUpdateActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Remove File">
+        <pd:type>com.tibco.plugin.file.FileRemoveActivity</pd:type>
+        <pd:resourceType>ae.activities.FileRemoveActivity</pd:resourceType>
+        <pd:x>738</pd:x>
+        <pd:y>262</pd:y>
+        <config/>
+        <pd:inputBindings>
+            <ns:RemoveActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/lab/RepertoireFrom,$File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName)"/>
+                </fileName>
+            </ns:RemoveActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log init">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>140</pd:x>
+        <pd:y>82</pd:y>
+        <config>
+            <processName>ProcessDefinitions/Logging.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns6:LogInfo>
+                <ns6:idfonc>
+                    <xsl:value-of select="'unkown'"/>
+                </ns6:idfonc>
+                <ns6:idtech>
+                    <xsl:value-of select="$_processContext/ns2:ProcessContext/ProcessId"/>
+                </ns6:idtech>
+                <ns6:status>
+                    <xsl:value-of select="'initial'"/>
+                </ns6:status>
+                <ns6:logmessage>
+                    <xsl:value-of select="concat('process initial with id: ',$_processContext/ns2:ProcessContext/ProcessId)"/>
+                </ns6:logmessage>
+            </ns6:LogInfo>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CatchAll">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>966</pd:x>
+        <pd:y>449</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Copy file Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>379</pd:x>
+        <pd:y>254</pd:y>
+        <config>
+            <faultName/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:ActivityInput>
+                <message>
+                    <xsl:value-of select="$_error/ns2:ErrorReport/Msg"/>
+                </message>
+                <xsl:if test="$_error/ns2:ErrorReport/MsgCode">
+                    <messageCode>
+                        <xsl:value-of select="$_error/ns2:ErrorReport/MsgCode"/>
+                    </messageCode>
+                </xsl:if>
+            </pfx2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="jdbc update Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>964</pd:x>
+        <pd:y>80</pd:y>
+        <config>
+            <faultName/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:ActivityInput>
+                <message>
+                    <xsl:value-of select="$_error/ns2:ErrorReport/Msg"/>
+                </message>
+                <xsl:if test="$_error/ns2:ErrorReport/MsgCode">
+                    <messageCode>
+                        <xsl:value-of select="$_error/ns2:ErrorReport/MsgCode"/>
+                    </messageCode>
+                </xsl:if>
+            </pfx2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Logging-1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>971</pd:x>
+        <pd:y>346</pd:y>
+        <config>
+            <processName>ProcessDefinitions/Logging.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns6:LogInfo>
+                <ns6:idfonc>
+                    <xsl:value-of select="'unkown'"/>
+                </ns6:idfonc>
+                <ns6:idtech>
+                    <xsl:value-of select="$_processContext/ns2:ProcessContext/ProcessId"/>
+                </ns6:idtech>
+                <ns6:status>
+                    <xsl:value-of select="'Error'"/>
+                </ns6:status>
+                <ns6:logmessage>
+                    <xsl:value-of select="$_error/ns2:ErrorReport/Msg"/>
+                </ns6:logmessage>
+            </ns6:LogInfo>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch_Specific_file">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>827</pd:x>
+        <pd:y>444</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>false</catchAll>
+            <fault>localname=FileIOException namespace=http://schemas.tibco.com/bw/plugins/file/5.0/fileExceptions</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Logging-2">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>832</pd:x>
+        <pd:y>342</pd:y>
+        <config>
+            <processName>ProcessDefinitions/Logging.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns6:LogInfo>
+                <ns6:idfonc>
+                    <xsl:value-of select="'unkown'"/>
+                </ns6:idfonc>
+                <ns6:idtech>
+                    <xsl:value-of select="$_processContext/ns2:ProcessContext/ProcessId"/>
+                </ns6:idtech>
+                <ns6:status>
+                    <xsl:value-of select="'error'"/>
+                </ns6:status>
+                <ns6:logmessage>
+                    <xsl:value-of select="$Catch_Specific_file/ns4:FileIOException/msg"/>
+                </ns6:logmessage>
+            </ns6:LogInfo>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="catch_specific_jdbc">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>1098</pd:x>
+        <pd:y>449</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>false</catchAll>
+            <fault>localname=JDBCSQLException namespace=http://schemas.tibco.com/bw/plugins/jdbc/5.0/jdbcExceptions</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Logging-1-1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1097</pd:x>
+        <pd:y>339</pd:y>
+        <config>
+            <processName>ProcessDefinitions/Logging.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns6:LogInfo>
+                <ns6:idfonc>
+                    <xsl:value-of select="'unkown'"/>
+                </ns6:idfonc>
+                <ns6:idtech>
+                    <xsl:value-of select="$_processContext/ns2:ProcessContext/ProcessId"/>
+                </ns6:idtech>
+                <ns6:status>
+                    <xsl:value-of select="'Error'"/>
+                </ns6:status>
+                <ns6:logmessage>
+                    <xsl:value-of select="$catch_specific_jdbc/ns5:JDBCSQLException/msg"/>
+                </ns6:logmessage>
+            </ns6:LogInfo>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="right name">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>855</pd:x>
+        <pd:y>265</pd:y>
+        <config>
+            <processName>ProcessDefinitions/Logging.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns6:LogInfo>
+                <ns6:idfonc>
+                    <xsl:value-of select="concat('id client:', number( substring-before( tib:substring-after-last($File-Poller/ns:EventSourceOuputTextClass/fileInfo/fileName ,&quot;_&quot;), &quot;.&quot;)))"/>
+                </ns6:idfonc>
+                <ns6:idtech>
+                    <xsl:value-of select="$_processContext/ns2:ProcessContext/ProcessId"/>
+                </ns6:idtech>
+                <ns6:status>
+                    <xsl:value-of select="'Success'"/>
+                </ns6:status>
+                <ns6:logmessage>
+                    <xsl:value-of select="'Proccess executed with success'"/>
+                </ns6:logmessage>
+            </ns6:LogInfo>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="bad name">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>853</pd:x>
+        <pd:y>173</pd:y>
+        <config>
+            <processName>ProcessDefinitions/Logging.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns6:LogInfo>
+                <ns6:idfonc>
+                    <xsl:value-of select="'unkown'"/>
+                </ns6:idfonc>
+                <ns6:idtech>
+                    <xsl:value-of select="$_processContext/ns2:ProcessContext/ProcessId"/>
+                </ns6:idtech>
+                <ns6:status>
+                    <xsl:value-of select="'Success'"/>
+                </ns6:status>
+                <ns6:logmessage>
+                    <xsl:value-of select="'Process executed with success'"/>
+                </ns6:logmessage>
+            </ns6:LogInfo>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>File Poller</pd:from>
+        <pd:to>Log init</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>Copy File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Copy File</pd:from>
+        <pd:to>Parse Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Map-Data/FileName='Accepte'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Data</pd:from>
+        <pd:to>JDBC Update</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Update</pd:from>
+        <pd:to>Remove File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Remove File</pd:from>
+        <pd:to>right name</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Map-Data/FileName='Accepte'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Copy File</pd:from>
+        <pd:to>Remove File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Map-Data/FileName='Reject'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log init</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CatchAll</pd:from>
+        <pd:to>Logging-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Copy File</pd:from>
+        <pd:to>Copy file Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JDBC Update</pd:from>
+        <pd:to>jdbc update Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Logging-1</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch_Specific_file</pd:from>
+        <pd:to>Logging-2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Logging-2</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>catch_specific_jdbc</pd:from>
+        <pd:to>Logging-1-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Logging-1-1</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>right name</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Remove File</pd:from>
+        <pd:to>bad name</pd:to>
+        <pd:xpathDescription/>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Map-Data/FileName='Reject'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>bad name</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

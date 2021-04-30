@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.fastcube.project</groupId>
+  <artifactId>maven-jenkins</artifactId>
+  <version>1.0.0</version>
+  <packaging>bw-ear-deploy</packaging>
+  <properties>
+    <project.build.outputDirectory>${project.basedir}</project.build.outputDirectory>
+    <deploy.project.name>${project.artifactId}</deploy.project.name>
+    <deploy.descriptor>${project.artifactId}-${project.version}-final.xml</deploy.descriptor>
+    <appmanage.tra.path>${tibco.home}/tra/${tibco.tra.version}/bin/AppManage.tra</appmanage.tra.path>
+    <bwengine.tra.path>${tibco.home}/bw/${tibco.bw.version}/bin/bwengine.tra</bwengine.tra.path>
+    <deploy.descriptor.final>${project.artifactId}-${project.version}-deploy.xml</deploy.descriptor.final>
+    <tibrv.home.path>${tibco.home}/tibrv/${tibco.rv.version}</tibrv.home.path>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <generate.pom.root.skip>true</generate.pom.root.skip>
+    <project.package.directory>${project.build.directory}/package</project.package.directory>
+    <maven.deploy.skip>true</maven.deploy.skip>
+    <bwengine.path>${tibco.home}/bw/${tibco.bw.version}/bin/bwengine${executables.extension}</bwengine.path>
+    <maven.install.skip>true</maven.install.skip>
+    <appmanage.path>${tibco.home}/tra/${tibco.tra.version}/bin/AppManage${executables.extension}</appmanage.path>
+  </properties>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>fr.fastconnect.factory.tibco.bw.maven</groupId>
+          <artifactId>bw-maven-plugin</artifactId>
+          <version>2.4.1</version>
+          <extensions>true</extensions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.4.1</version>
+        <executions>
+          <execution>
+            <id>enforce</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <rules combine.children="append">
+            <requireProperty>
+              <message>tibco.home is required</message>
+              <property>tibco.home</property>
+              <regex>.*</regex>
+              <regexMessage>tibco.home may not be undefined nor empty.</regexMessage>
+            </requireProperty>
+            <requireProperty>
+              <message>tibco.bw.version is required</message>
+              <property>tibco.bw.version</property>
+              <regex>.*</regex>
+              <regexMessage>tibco.bw.version may not be undefined nor empty.</regexMessage>
+            </requireProperty>
+            <requireProperty>
+              <message>tibco.designer.version is required</message>
+              <property>tibco.designer.version</property>
+              <regex>.*</regex>
+              <regexMessage>tibco.designer.version may not be undefined nor empty.</regexMessage>
+            </requireProperty>
+            <requireProperty>
+              <message>tibco.hawk.version is required</message>
+              <property>tibco.hawk.version</property>
+              <regex>.*</regex>
+              <regexMessage>tibco.hawk.version may not be undefined nor empty.</regexMessage>
+            </requireProperty>
+            <requireProperty>
+              <message>tibco.tra.version is required</message>
+              <property>tibco.tra.version</property>
+              <regex>.*</regex>
+              <regexMessage>tibco.tra.version may not be undefined nor empty.</regexMessage>
+            </requireProperty>
+            <requireProperty>
+              <message>tibco.rv.version is required</message>
+              <property>tibco.rv.version</property>
+              <regex>.*</regex>
+              <regexMessage>tibco.rv.version may not be undefined nor empty.</regexMessage>
+            </requireProperty>
+            <requireProperty>
+              <message>tibco.domain.name is required</message>
+              <property>tibco.domain.name</property>
+              <regex>.*</regex>
+              <regexMessage>tibco.domain.name may not be undefined nor empty.</regexMessage>
+            </requireProperty>
+            <requireProperty>
+              <message>tibco.domain.username is required</message>
+              <property>tibco.domain.username</property>
+              <regex>.*</regex>
+              <regexMessage>tibco.domain.username may not be undefined nor empty.</regexMessage>
+            </requireProperty>
+            <requireProperty>
+              <message>tibco.domain.password is required</message>
+              <property>tibco.domain.password</property>
+              <regex>.*</regex>
+              <regexMessage>tibco.domain.password may not be undefined nor empty.</regexMessage>
+            </requireProperty>
+          </rules>
+          <fail>true</fail>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>fr.fastconnect.factory.tibco.bw.maven</groupId>
+        <artifactId>bw-maven-plugin</artifactId>
+        <version>2.4.1</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>
