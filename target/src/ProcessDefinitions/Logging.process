@@ -4,12 +4,12 @@
     <pd:name>ProcessDefinitions/Logging.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType ref="pfx2:LogInfo"/>
-    <pd:startX>82</pd:startX>
-    <pd:startY>62</pd:startY>
+    <pd:startX>78</pd:startX>
+    <pd:startY>67</pd:startY>
     <pd:returnBindings/>
     <pd:endName>End</pd:endName>
-    <pd:endX>462</pd:endX>
-    <pd:endY>67</pd:endY>
+    <pd:endX>510</pd:endX>
+    <pd:endY>65</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1618909203869</pd:targetNamespace>
@@ -77,8 +77,8 @@
     <pd:activity name="Log">
         <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
         <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>219</pd:x>
-        <pd:y>68</pd:y>
+        <pd:x>200</pd:x>
+        <pd:y>66</pd:y>
         <config>
             <role>User</role>
         </config>
