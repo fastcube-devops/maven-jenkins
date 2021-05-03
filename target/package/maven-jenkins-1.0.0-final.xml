@@ -72,7 +72,7 @@
         </NameValuePair>
         <NameValuePairPassword>
             <name>lab/jdbcPassword</name>
-            <value>#!yRbjxzfoWWTaDLKqfslM+zSTQE++cryd</value>
+            <value>#!fUJUsxVIVDJm929ebNQ0vNsyWAtYV2Me</value>
         </NameValuePairPassword>
         <NameValuePair>
             <name>lab/jdbcUrl</name>
@@ -388,6 +388,13 @@
                 </events>
             </monitor>
             <bwprocesses>
+                <bwprocess name="ProcessDefinitions/Verify_name_file.process">
+                    <starter>File Poller</starter>
+                    <enabled>true</enabled>
+                    <maxJob>0</maxJob>
+                    <activation>true</activation>
+                    <flowLimit>0</flowLimit>
+                </bwprocess>
                 <bwprocess name="maven-jenkins/SimpleLoggerOnStartup.process">
                     <starter>onStartup</starter>
                     <enabled>true</enabled>
@@ -399,7 +406,7 @@
             <checkpoints selected="Local File">
                 <checkpoint>Local File</checkpoint>
                 <checkpoint>/Connections/JDBC_Connection</checkpoint>
-                <tablePrefix>maven_jenk_25134495</tablePrefix>
+                <tablePrefix>maven_jenk_80213427</tablePrefix>
             </checkpoints>
             <isFt>true</isFt>
             <faultTolerant>

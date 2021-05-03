@@ -1,5 +1,5 @@
 #TIBCO Designer Preferences
-#Thu Apr 29 18:18:39 CEST 2021
+#Mon May 03 10:39:03 CEST 2021
 BindingFixerDialog.categoryColumn=50
 BindingFixerDialog.fixColumn=50
 BindingFixerDialog.showWarnings=true
@@ -50,10 +50,10 @@ ae.show_tip_of_day=false
 ae.two.column.pm.dividers.0=411
 ae.two.column.pm.dividers.1=472
 ae.undo.stack.size.pref=0
-application.height=1009
-application.width=1714
-application.x=-6
-application.y=1
+application.height=1176
+application.width=1936
+application.x=-8
+application.y=-8
 binding.choose.dialog.lastWindowLocation=693,450
 binding.choose.dialog.lastWindowSize=300,150
 binding.data.BindTextSplit=130

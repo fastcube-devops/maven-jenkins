@@ -8,7 +8,7 @@
         <processArchive name="maven-jenkins">
             <resourceType>process.archive.resource</resourceType>
             <authorProperty/>
-            <processProperty>/maven-jenkins/SimpleLoggerOnStartup.process</processProperty>
+            <processProperty>/maven-jenkins/SimpleLoggerOnStartup.process,/ProcessDefinitions/Verify_name_file.process</processProperty>
         </processArchive>
         <versionProperty>1</versionProperty>
         <authorProperty/>
