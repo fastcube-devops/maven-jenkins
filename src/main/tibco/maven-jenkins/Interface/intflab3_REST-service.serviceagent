@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<serviceResource xmlns:wsdl="http://www.example.com/1619514932897">
-    <ns0:import xmlns:ns0="http://schemas.xmlsoap.org/wsdl/" namespace="http://www.example.com/1619514932897" location="/Interface/intflab3_REST.wsdl"/>
+<serviceResource xmlns:wsdl="http://www.example.com/1620036471774">
+    <ns0:import xmlns:ns0="http://schemas.xmlsoap.org/wsdl/" namespace="http://www.example.com/1620036471774" location="/Interface/intflab3_REST.wsdl"/>
     <config>
-        <wsdl namespace="http://xmlns.example.com/1619514940796" embedWsdlComponents="true" embedSchemaComponents="true" embedJndiProperties="false"/>
+        <wsdl namespace="http://xmlns.example.com/1620036482337" embedWsdlComponents="true" embedSchemaComponents="true" embedJndiProperties="false"/>
         <class>com.tibco.bw.service.serviceAgent.ServiceServiceAgent</class>
         <name>intflab3_REST-service</name>
         <resourceType>service.definition</resourceType>
@@ -15,7 +15,7 @@
                 <tabName>portType</tabName>
                 <tabType>bw</tabType>
                 <config>
-                    <wsdlDetail location="/Interface/intflab3_REST.wsdl" portType="portType" ns="http://www.example.com/1619514932897"/>
+                    <wsdlDetail location="/Interface/intflab3_REST.wsdl" portType="portType" ns="http://www.example.com/1620036471774"/>
                     <detail>
                         <tab>
                             <tabName>service.definition.impl.tab.label</tabName>

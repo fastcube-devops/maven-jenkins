@@ -8,9 +8,9 @@
         <processArchive name="maven-jenkins">
             <resourceType>process.archive.resource</resourceType>
             <authorProperty/>
-            <processProperty>/maven-jenkins/SimpleLoggerOnStartup.process</processProperty>
+            <processProperty>/ProcessDefinitions/Lab3 SOAP.process,/Interface/intflab3_REST-service.serviceagent</processProperty>
         </processArchive>
-        <versionProperty>1</versionProperty>
+        <versionProperty>3</versionProperty>
         <authorProperty/>
         <addServiceSettableGvars>true</addServiceSettableGvars>
         <name>maven-jenkins</name>
@@ -19,6 +19,6 @@
             <fixedChildren/>
             <resourceDescriptions/>
         </designer>
-        <fileLocationProperty>C:\temp${bwProjectName}.ear</fileLocationProperty>
+        <fileLocationProperty>C:\Users\Dev\Documents\repos\Lab3Soap.ear</fileLocationProperty>
     </enterpriseArchive>
 </Repository:repository>

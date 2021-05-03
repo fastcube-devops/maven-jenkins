@@ -1,102 +1,194 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema">
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx3="http://www.tibco.com/schemas/maven-jenkins/Schemas/Schema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema">
     <xsd:import namespace="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd" schemaLocation="/JSON_GEN_Schemas/WeatherSchema.xsd"/>
     <pd:name>ProcessDefinitions/Get weather locally.process</pd:name>
     <pd:startName>Start</pd:startName>
     <pd:startType>
         <xsd:element name="address" type="xsd:string"/>
     </pd:startType>
-    <pd:startX>148</pd:startX>
+    <pd:startX>146</pd:startX>
     <pd:startY>179</pd:startY>
     <pd:returnBindings>
-        <xsl:copy-of select="$Parse-XML/pfx:JSON"/>
+        <xsl:copy-of select="$Parse-JSON/pfx:JSON"/>
     </pd:returnBindings>
     <pd:endName>End</pd:endName>
     <pd:endType ref="pfx:JSON"/>
-    <pd:endX>693</pd:endX>
-    <pd:endY>181</pd:endY>
+    <pd:endX>933</pd:endX>
+    <pd:endY>313</pd:endY>
     <pd:errorSchemas/>
     <pd:processVariables/>
     <pd:targetNamespace>http://xmlns.example.com/1619172086762</pd:targetNamespace>
     <pd:activity name="Catch">
         <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
         <pd:resourceType>ae.activities.catch</pd:resourceType>
-        <pd:x>809</pd:x>
-        <pd:y>180</pd:y>
+        <pd:x>1025</pd:x>
+        <pd:y>308</pd:y>
         <pd:handler>true</pd:handler>
         <config>
             <catchAll>true</catchAll>
         </config>
         <pd:inputBindings/>
     </pd:activity>
-    <pd:activity name="Parse XML">
-        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
-        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
-        <pd:x>557</pd:x>
-        <pd:y>182</pd:y>
+    <pd:activity name="GSV_list">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>148</pd:x>
+        <pd:y>317</pd:y>
         <config>
-            <inputStyle>text</inputStyle>
-            <xsdVersion>default</xsdVersion>
-            <validateOutput>false</validateOutput>
-            <term ref="pfx:JSON"/>
+            <variableConfig>/SharedVars/address.sharedvariable</variableConfig>
         </config>
-        <pd:inputBindings>
-            <xmlString>
-                <xsl:value-of select="$Read-File/ns1:ReadActivityOutputTextClass/fileContent/textContent"/>
-            </xmlString>
-        </pd:inputBindings>
+        <pd:inputBindings/>
     </pd:activity>
-    <pd:activity name="Read File">
-        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
-        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
-        <pd:x>262</pd:x>
-        <pd:y>182</pd:y>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>331</pd:x>
+        <pd:y>230</pd:y>
+        <pd:width>508</pd:width>
+        <pd:height>168</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
         <config>
-            <encoding>text</encoding>
+            <pd:groupType>repeat</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:outSlot>hey</pd:outSlot>
+            <pd:activityOutputName>Parse-JSON</pd:activityOutputName>
+            <pd:repeatCondition>$i&gt;count($GSV_list/pfx3:list/pfx3:listItem) or 
+exists($Parse-JSON/pfx:JSON/pfx:weather)</pd:repeatCondition>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Log-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Parse-JSON</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Log-1</pd:from>
+            <pd:to>GSV_list-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GSV_list-1</pd:from>
+            <pd:to>SSV_list-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>SSV_list-1</pd:from>
+            <pd:to>Parse-JSON</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Parse-JSON">
+            <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+            <pd:x>737</pd:x>
+            <pd:y>317</pd:y>
+            <config>
+                <inputStyle>text</inputStyle>
+                <xsdVersion>default</xsdVersion>
+                <validateOutput>false</validateOutput>
+                <term ref="pfx:JSON"/>
+            </config>
+            <pd:inputBindings>
+                <xsl:choose>
+                    <xsl:when test="compare(lower-case(tib:trim($Start/address)), lower-case(tib:trim($GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:address)))=0 and&#xA;tib:compare-date(tib:format-dateTime(&quot;yyyy-MM-dd&quot;, $GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:datetime), current-date())=0 and&#xA;tib:get-hours-from-dateTime(current-dateTime()) - tib:get-hours-from-dateTime($GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:datetime)&lt;1">
+                        <xmlString>
+                            <xsl:value-of select="$GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:weather"/>
+                        </xmlString>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xmlString>
+                            <xsl:value-of select="'&lt;JSON xmlns=&quot;http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd&quot; xsi:schemaLocation=&quot;http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd schema.xsd&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;/>'"/>
+                        </xmlString>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Log-1">
+            <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+            <pd:resourceType>ae.activities.log</pd:resourceType>
+            <pd:x>406</pd:x>
+            <pd:y>321</pd:y>
+            <config>
+                <role>User</role>
+            </config>
+            <pd:inputBindings>
+                <pfx2:ActivityInput>
+                    <message>
+                        <xsl:value-of select="concat(&#xA;&quot;count : &quot;, count($GSV_list/pfx3:list/pfx3:listItem),&#xA;&quot;, index =  &quot;, $i&#xA;)"/>
+                    </message>
+                </pfx2:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="SSV_list-1">
+            <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+            <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+            <pd:x>607</pd:x>
+            <pd:y>319</pd:y>
+            <config>
+                <variableConfig>/SharedVars/address.sharedvariable</variableConfig>
+            </config>
+            <pd:inputBindings>
+                <pfx3:list>
+                    <xsl:choose>
+                        <xsl:when test="exists($GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:datetime) and&#xA;tib:compare-date(tib:format-dateTime(&quot;yyyy-MM-dd&quot;, $GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:datetime), current-date())=0  and&#xA;tib:get-hours-from-dateTime(current-dateTime()) - tib:get-hours-from-dateTime($GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:datetime)&lt;1">
+                            <pfx3:listItem>
+                                <pfx3:address>
+                                    <xsl:value-of select="$GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:address"/>
+                                </pfx3:address>
+                                <pfx3:datetime>
+                                    <xsl:value-of select="$GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:datetime"/>
+                                </pfx3:datetime>
+                                <pfx3:weather>
+                                    <xsl:value-of select="$GSV_list/pfx3:list/pfx3:listItem[$i]/pfx3:weather"/>
+                                </pfx3:weather>
+                            </pfx3:listItem>
+                        </xsl:when>
+                    </xsl:choose>
+                    <xsl:copy-of select="$GSV_list-1/pfx3:list/pfx3:listItem"/>
+                </pfx3:list>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="GSV_list-1">
+            <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+            <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+            <pd:x>490</pd:x>
+            <pd:y>322</pd:y>
+            <config>
+                <variableConfig>/SharedVars/address.sharedvariable</variableConfig>
+            </config>
+            <pd:inputBindings/>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="SSV_list">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>248</pd:x>
+        <pd:y>317</pd:y>
+        <config>
+            <variableConfig>/SharedVars/address.sharedvariable</variableConfig>
         </config>
         <pd:inputBindings>
-            <ns2:ReadActivityInputClass>
-                <fileName>
-                    <xsl:value-of select="concat($_globalVariables/ns:GlobalVariables/localWeather, lower-case(tib:trim($Start/address)),&quot;.txt&quot;)"/>
-                </fileName>
-            </ns2:ReadActivityInputClass>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Write File">
-        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
-        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
-        <pd:x>564</pd:x>
-        <pd:y>287</pd:y>
-        <config>
-            <encoding>text</encoding>
-            <compressFile>None</compressFile>
-            <append>false</append>
-        </config>
-        <pd:inputBindings>
-            <ns1:WriteActivityInputTextClass>
-                <fileName>
-                    <xsl:value-of select="$Read-File/ns1:ReadActivityOutputTextClass/fileInfo/fullName"/>
-                </fileName>
-                <textContent>
-                    <xsl:value-of select="&quot;Null&quot;"/>
-                </textContent>
-            </ns1:WriteActivityInputTextClass>
-        </pd:inputBindings>
-    </pd:activity>
-    <pd:activity name="Log">
-        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
-        <pd:resourceType>ae.activities.log</pd:resourceType>
-        <pd:x>380</pd:x>
-        <pd:y>181</pd:y>
-        <config>
-            <role>User</role>
-        </config>
-        <pd:inputBindings>
-            <pfx2:ActivityInput>
-                <message>
-                    <xsl:value-of select="tib:compare-date(&#xA;tib:create-date(tib:get-year-from-dateTime($Read-File/ns1:ReadActivityOutputTextClass/fileInfo/lastModified), tib:get-month-from-dateTime($Read-File/ns1:ReadActivityOutputTextClass/fileInfo/lastModified), tib:get-day-from-dateTime($Read-File/ns1:ReadActivityOutputTextClass/fileInfo/lastModified)), &#xA;current-date())=0 and&#xA;tib:get-hours-from-dateTime(current-dateTime())-tib:get-hours-from-dateTime($Read-File/ns1:ReadActivityOutputTextClass/fileInfo/lastModified)&lt;1"/>
-                </message>
-            </pfx2:ActivityInput>
+            <pfx3:list/>
         </pd:inputBindings>
     </pd:activity>
     <pd:transition>
@@ -107,50 +199,32 @@
         <pd:conditionType>always</pd:conditionType>
     </pd:transition>
     <pd:transition>
+        <pd:from>GSV_list</pd:from>
+        <pd:to>SSV_list</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SSV_list</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:xpathDescription/>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
         <pd:from>Start</pd:from>
-        <pd:to>Read File</pd:to>
+        <pd:to>GSV_list</pd:to>
         <pd:lineType>Default</pd:lineType>
         <pd:lineColor>-16777216</pd:lineColor>
         <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Parse XML</pd:from>
-        <pd:to>End</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Write File</pd:from>
-        <pd:to>End</pd:to>
-        <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Log</pd:from>
-        <pd:to>Parse XML</pd:to>
-        <pd:xpathDescription>Fresh data</pd:xpathDescription>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>xpath</pd:conditionType>
-        <pd:xpath>tib:compare-date(
-tib:create-date(tib:get-year-from-dateTime($Read-File/ns1:ReadActivityOutputTextClass/fileInfo/lastModified), tib:get-month-from-dateTime($Read-File/ns1:ReadActivityOutputTextClass/fileInfo/lastModified), tib:get-day-from-dateTime($Read-File/ns1:ReadActivityOutputTextClass/fileInfo/lastModified)), 
-current-date())=0 and
-tib:get-hours-from-dateTime(current-dateTime())-tib:get-hours-from-dateTime($Read-File/ns1:ReadActivityOutputTextClass/fileInfo/lastModified)&lt;1</pd:xpath>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Read File</pd:from>
-        <pd:to>Log</pd:to>
-        <pd:lineType>Default</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>always</pd:conditionType>
-    </pd:transition>
-    <pd:transition>
-        <pd:from>Log</pd:from>
-        <pd:to>Write File</pd:to>
-        <pd:lineType>Multiple Bends</pd:lineType>
-        <pd:lineColor>-16777216</pd:lineColor>
-        <pd:conditionType>otherwise</pd:conditionType>
     </pd:transition>
 </pd:ProcessDefinition>

@@ -1,1 +1,4 @@
-0=logging:LogLib:1.0.2:projlib\=
+#Design time libraries
+#Format: #=File Alias=Description
+#Mon May 03 12:23:50 CEST 2021
+0=logging\:LogLib\:1.0.2\:projlib\=

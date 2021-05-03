@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<BWSharedResource xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<BWSharedResource xmlns:pfx="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd" xmlns:pfx2="http://www.tibco.com/schemas/maven-jenkins/Schemas/Schema.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <import namespace="http://www.tibco.com/schemas/Lab3/JSON_GEN_Schemas/Schema.xsd" schemaLocation="/JSON_GEN_Schemas/WeatherSchema.xsd"/>
+    <import namespace="http://www.tibco.com/schemas/maven-jenkins/Schemas/Schema.xsd" schemaLocation="/Schemas/SharedVar.xsd"/>
     <name>address</name>
     <resourceType>ae.shared.sharedVariable</resourceType>
     <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
         <persistent>true</persistent>
         <multi-engine>false</multi-engine>
-        <initialValue>none</initialValue>
-        <xsdString>
-            <xsd:element name="address" type="xsd:string"/>
-        </xsdString>
+        <initialValue>byRef</initialValue>
+        <initialValueRef>/Ressources/Instance.xml</initialValueRef>
+        <xsdString ref="pfx2:list"/>
     </config>
 </BWSharedResource>

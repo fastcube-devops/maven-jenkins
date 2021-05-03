@@ -188,7 +188,7 @@
     <pd:activity name="SOAPRequestReply">
         <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
         <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
-        <pd:x>332</pd:x>
+        <pd:x>331</pd:x>
         <pd:y>212</pd:y>
         <config>
             <timeout>0</timeout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <name>length</name>
+    <resourceType>ae.shared.sharedVariable</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <persistent>true</persistent>
+        <multi-engine>false</multi-engine>
+        <initialValue>byRef</initialValue>
+        <initialValueRef>1</initialValueRef>
+        <xsdString>
+            <xsd:element name="length" type="xsd:int"/>
+        </xsdString>
+    </config>
+</BWSharedResource>
